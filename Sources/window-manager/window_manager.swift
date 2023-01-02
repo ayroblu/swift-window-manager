@@ -10,6 +10,7 @@ public struct window_manager {
     let sp = spacesPlist.spacesDisplayConfiguration.spaceProperties
     let windowIdsSet = Set(sp.flatMap { property in property.windows })
     let windowDictDict = getWindowDicts(windowIds: windowIdsSet)
+    saveScreenshots(windowIds: windowIdsSet)
 
     var i = 1
     sp.forEach { prop in

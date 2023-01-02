@@ -51,7 +51,7 @@ func getWindowDicts(windowIds: Set<Int>) -> [Int: Any] {
       if let windowId = windowDict[kCGWindowNumber as String] as? CGWindowID {
         let intWindowId = Int(windowId)
         if let name = windowDict[kCGWindowName as String] as? String {
-          print(intWindowId, name)
+          // print(intWindowId, name)
         }
         if windowIds.contains(intWindowId) {
           returnDict[intWindowId] = windowDict
@@ -62,10 +62,7 @@ func getWindowDicts(windowIds: Set<Int>) -> [Int: Any] {
   return returnDict
 }
 
-func getScreenshots() {
-  let spaceWindowIds: Set = [
-    31534, 31523, 29589, 25216, 56, 22, 14999, 27440, 31486, 27719, 269, 15000,
-  ]
+func saveScreenshots(windowIds: Set<Int>) {
   if let windowInfo = CGWindowListCopyWindowInfo(.optionAll, kCGNullWindowID) as? [[String: Any]] {
     // print(windowInfo)
 
@@ -73,10 +70,10 @@ func getScreenshots() {
       if let windowName = windowDict[kCGWindowName as String] as? String,
         let windowId = windowDict[kCGWindowNumber as String] as? CGWindowID
       {
-        if spaceWindowIds.contains(Int(windowId)) && windowName.count > 0 {
-          print(windowName)
+        if windowIds.contains(Int(windowId)) && windowName.count > 0 {
           let fileName = "/tmp/testing-screen-\(windowName).png"
           let fileUrl = URL(fileURLWithPath: fileName)
+          print("saving", fileName)
           saveImage(forWindow: windowId, to: fileUrl)
         }
       }
